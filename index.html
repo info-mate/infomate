@@ -54,24 +54,25 @@
 <body>
 
 <script>
-  // Info Mate Login Gate
-  window.location.replace("https://docs.google.com/forms/d/e/1FAIpQLSeL-d48B4ebCuRqmepc5rWHza_uClO7G7HrBF4aaTF8iC5jxA/viewform?usp=header");
+  // Check if user already logged in
+  if (localStorage.getItem("infomate_loggedin") === "true") {
+    // Already logged in → go to welcome page
+    window.location.replace("welcome.html");
+  } else {
+    // First time → go to login
+    window.location.replace("https://docs.google.com/forms/d/e/1FAIpQLSeL-d48B4ebCuRqmepc5rWHza_uClO7G7HrBF4aaTF8iC5jxA/viewform?usp=header");
+  }
 </script>
 
 <noscript>
-  <div style="padding:40px; text-align:center; font-family:Arial;">
-    <h2>Login Required</h2>
-    <p>Please enable JavaScript to access Info Mate.</p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeL-d48B4ebCuRqmepc5rWHza_uClO7G7HrBF4aaTF8iC5jxA/viewform?usp=header">
-      Click here to Login
-    </a>
-  </div>
+  <p>Please enable JavaScript to access Info Mate.</p>
 </noscript>
 
 </body>
 
 
 </html>
+
 
 
 
