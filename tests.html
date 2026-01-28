@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Free Tests – Info Mates</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
@@ -11,143 +12,92 @@
       background-color: #f2f5f9;
       color: #333;
     }
-    header {
-      background-color: #0b3c5d;
-      color: white;
-      padding: 25px;
-      text-align: center;
-    }
-    nav {
-      background-color: #092f47;
-      padding: 10px;
-      text-align: center;
-    }
-    nav a {
-      color: white;
-      margin: 0 12px;
-      text-decoration: none;
-      font-weight: bold;
-    }
+
     section {
       max-width: 1000px;
       margin: auto;
-      padding: 30px;
+      padding: 40px 20px;
     }
+
     .box {
       background: white;
       padding: 25px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    footer {
-      background-color: #0b3c5d;
-      color: white;
-      text-align: center;
-      padding: 15px;
+
+    /* Accordion test styling */
+    details {
+      background: #f9fbfd;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+    }
+
+    summary {
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      color: #0b3c5d;
+    }
+
+    details[open] summary {
+      margin-bottom: 10px;
     }
   </style>
 </head>
+
 <body>
 
-<header>
-  <h1>Info Mates</h1>
-  <p>Free Online Practice Tests</p>
-</header>
-
-<nav>
-  <a href="index.html">Home</a>
-  <a href="school.html">School</a>
-  <a href="competitive.html">Competitive</a>
-  <a href="tests.html">Free Tests</a>
-  <a href="contact.html">Contact</a>
-</nav>
-
 <section>
-  <div class="box">
-  <h2>Free Practice Test – 01</h2>
-  <p>
-    This test is designed for school and foundation-level students.
-    Attempt the test below and submit your responses.
-  </p>
 
-  <iframe 
-    src="https://docs.google.com/forms/d/e/1FAIpQLSfPYPBf_dXWpaqHLEm60mtTF2II_xGnHiO_RbiYfuTXR51OQw/viewform?usp=publish-editor"
-    width="100%" 
-    height="800" 
-    frameborder="0" 
-    marginheight="0" 
-    marginwidth="0">
-    Loading…
-  </iframe>
-</div>
-<div class="box">
-  <h2>Free Practice Test – 02</h2>
-  <p>
-    This test is for additional practice and concept reinforcement.
-  </p>
+  <!-- PASTE YOUR OLD TEST DIVs BELOW THIS LINE -->
+ <div class="box">
+    <h2>📘 School Tests</h2>
 
-  <iframe 
-    src="https://docs.google.com/forms/d/e/1FAIpQLSd9LvwabRzJot3u-cUcDTeVwWIi2xGfzaMKytjv8gdy-bNoNA/viewform?usp=publish-editor"
-    width="100%" 
-    height="800" 
-    frameborder="0">
-  </iframe>
-</div>
-<div class="box">
-  <h2>Free Practice Test – 03</h2>
-  <p>
-    This test is for additional practice and concept reinforcement.
-  </p>
+    <details>
+      <summary>Class 6 – Practice Test 01</summary>
+      <iframe src="PASTE_CLASS6_TEST_LINK"
+        width="100%" height="600" frameborder="0"></iframe>
+    </details>
 
-  <iframe 
-    src="https://docs.google.com/forms/d/e/1FAIpQLSeX_6PbcIVHcrFPASkQ56mFn-kx2JN_4nlvEmTTBVxpTBxPhw/viewform?usp=publish-editor"
-    width="100%" 
-    height="800" 
-    frameborder="0">
-  </iframe>
-</div>
+    <details>
+      <summary>Class 7 – Practice Test 01</summary>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd9LvwabRzJot3u-cUcDTeVwWIi2xGfzaMKytjv8gdy-bNoNA/viewform?usp=header"
+        width="100%" height="600" frameborder="0"></iframe>
+    </details>
 
-
-  <div class="box">
-    <h3>How Tests Work</h3>
-    <p>
-      Tests are conducted using Google Forms with instant submission
-      and basic performance feedback.
-    </p>
+    <details>
+      <summary>Class 09 – Practice Test 01</summary>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfPYPBf_dXWpaqHLEm60mtTF2II_xGnHiO_RbiYfuTXR51OQw/viewform?usp=header"
+        width="100%" height="600" frameborder="0"></iframe>
+    </details>
   </div>
+
+  <div class="box">
+    <h2>🎯 Competitive Tests</h2>
+
+    <details>
+      <summary>JEE Foundation – Test 01</summary>
+      <iframe src="PASTE_JEE_TEST_LINK"
+        width="100%" height="600" frameborder="0"></iframe>
+    </details>
+
+    <details>
+      <summary>NEET Foundation – Test 01</summary>
+      <iframe src="PASTE_NEET_TEST_LINK"
+        width="100%" height="600" frameborder="0"></iframe>
+    </details>
+
+    <details>
+      <summary>Mini UPSC – Test 01</summary>
+      <iframe src="PASTE_UPSC_TEST_LINK"
+        width="100%" height="600" frameborder="0"></iframe>
+    </details>
+  </div>
+
 </section>
-
-<footer style="
-  background-color:#0b3c5d;
-  color:white;
-  text-align:center;
-  padding:25px 15px;
-  margin-top:40px;
-">
-  <p style="margin:5px 0; font-weight:bold;">
-    Info Mates
-  </p>
-
-  <p style="margin:5px 0; font-size:14px;">
-    Free Learning for School & Competitive Exams
-  </p>
-
-  <p style="margin:8px 0; font-size:14px;">
-    📺 YouTube: Info_Mates <br>
-    📬 Contact: sk88875@gmail.com
-  </p>
-
-  <p style="margin-top:10px; font-size:13px; opacity:0.8;">
-    © <span id="year"></span> Info Mates. All rights reserved.
-  </p>
-
-  <script>
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
-  </script>
-</footer>
-
 
 </body>
 </html>
