@@ -1,7 +1,7 @@
 {
-  "name": "Info Mate",
-  "short_name": "InfoMate",
-  "start_url": "/infomate/",
+  "name": "Info Mates",
+  "short_name": "InfoMates",
+  "start_url": "/infomates/",
   "display": "standalone",
   "background_color": "#0b3c5d",
   "theme_color": "#0b3c5d",
