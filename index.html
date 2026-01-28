@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0b3c5d">
-
   <meta charset="UTF-8">
+  <title>Info Mate | Free Learning Platform</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Info Mate Adda</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b3c5d">
+
   <style>
     body {
       margin: 0;
@@ -17,54 +19,114 @@
     header {
       background-color: #0b3c5d;
       color: white;
-      padding: 25px;
+      padding: 35px 20px;
       text-align: center;
+    }
+    header img {
+      height: 90px;
+      margin-bottom: 10px;
     }
     nav {
       background-color: #092f47;
-      padding: 10px;
+      padding: 12px;
       text-align: center;
     }
     nav a {
       color: white;
-      margin: 0 12px;
+      margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
     }
     section {
-      padding: 30px;
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
+      padding: 40px 20px;
     }
     .box {
       background: white;
-      padding: 20px;
-      margin-bottom: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .cta {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 12px 28px;
+      background: #0b3c5d;
+      color: white;
+      text-decoration: none;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      font-weight: bold;
     }
     footer {
       background-color: #0b3c5d;
       color: white;
       text-align: center;
-      padding: 15px;
+      padding: 18px;
+      margin-top: 40px;
     }
   </style>
 </head>
+<body>
 
+<header>
+  <img src="logo.png" alt="Info Mate Logo">
+  <h1>Info Mate</h1>
+  <p>Free Learning for School & Competitive Exams</p>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="school.html">School</a>
+  <a href="competitive.html">Competitive</a>
+  <a href="tests.html">Free Tests</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<section>
+
+  <div class="box">
+    <h2>Welcome to Info Mate</h2>
+    <p>
+      Info Mate is a free educational platform designed to support
+      school students and competitive exam aspirants with
+      concept-based learning, practice tests, and quality video content.
+    </p>
+  </div>
+
+  <div class="box">
+    <h2>📘 School Learning (Classes 6–10)</h2>
+    <p>
+      Subject-wise explanations in Maths, Science, and Social Studies
+      with bilingual support (English & Telugu).
+    </p>
+    <a class="cta" href="school.html">Explore School Section</a>
+  </div>
+
+  <div class="box">
+    <h2>🎯 Competitive Exam Foundation</h2>
+    <p>
+      Foundation-level preparation for JEE, NEET, SSC, RRB, and Mini UPSC
+      with focus on basics and conceptual clarity.
+    </p>
+    <a class="cta" href="competitive.html">Explore Competitive Section</a>
+  </div>
+
+  <div class="box">
+    <h2>📝 Free Online Tests</h2>
+    <p>
+      Practice with free online tests designed to evaluate understanding
+      and improve exam readiness.
+    </p>
+    <a class="cta" href="tests.html">Attempt Free Tests</a>
+  </div>
+
+</section>
+
+<footer>
+  © 2026 Info Mate | Learn • Practice • Grow
+</footer>
+
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
