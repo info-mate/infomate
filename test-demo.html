@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Practice Test Demo | Info Mates</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f5f9;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #0b3c5d;
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+.question p {
+  font-weight: bold;
+}
+
+.options label {
+  display: block;
+  margin: 6px 0;
+  cursor: pointer;
+}
+
+button {
+  background: #0b3c5d;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background: #09405f;
+}
+
+.result {
+  margin-top: 25px;
+  padding: 20px;
+  border-radius: 8px;
+  background: #eef3f7;
+}
+
+.correct {
+  color: green;
+}
+
+.wrong {
+  color: red;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>Physics – Motion (Practice Test)</h1>
+
+<form id="quiz">
+
+<div class="question">
+<p>1. What is acceleration?</p>
+<div class="options">
+<label><input type="radio" name="q1" value="0"> Distance travelled</label>
+<label><input type="radio" name="q1" value="1"> Rate of change of velocity</label>
+<label><input type="radio" name="q1" value="0"> Change in position</label>
+<label><input type="radio" name="q1" value="0"> Speed only</label>
+</div>
+</div>
+
+<div class="question">
+<p>2. SI unit of acceleration is:</p>
+<div class="options">
+<label><input type="radio" name="q2" value="0"> m</label>
+<label><input type="radio" name="q2" value="0"> m/s</label>
+<label><input type="radio" name="q2" value="1"> m/s²</label>
+<label><input type="radio" name="q2" value="0"> km/h</label>
+</div>
+</div>
+
+<div class="question">
+<p>3. Acceleration can be negative when:</p>
+<div class="options">
+<label><input type="radio" name="q3" value="1"> Velocity decreases</label>
+<label><input type="radio" name="q3" value="0"> Velocity is zero</label>
+<label><input type="radio" name="q3" value="0"> Object is at rest</label>
+<label><input type="radio" name="q3" value="0"> Motion is uniform</label>
+</div>
+</div>
+
+<button type="button" onclick="checkAnswers()">Submit Test</button>
+
+</form>
+
+<div id="result" class="result" style="display:none;"></div>
+
+</div>
+
+<script>
+function checkAnswers() {
+  const total = 3;
+  let score = 0;
+  let attempted = 0;
+
+  for (let i = 1; i <= total; i++) {
+    const q = document.querySelector(`input[name="q${i}"]:checked`);
+    if (q) {
+      attempted++;
+      score += parseInt(q.value);
+    }
+  }
+
+  let accuracy = attempted > 0 ? ((score / attempted) * 100).toFixed(1) : 0;
+
+  let message = `
+  <h3>Result Summary</h3>
+  <p>Score: <b>${score}/${total}</b></p>
+  <p>Attempted: ${attempted}</p>
+  <p>Accuracy: <b>${accuracy}%</b></p>
+  `;
+
+  if (accuracy < 50) {
+    message += `<p class="wrong">Weak understanding. Revise the concept.</p>
+    <p>👉 <a href="learn.html#motion" target="_blank">Watch Motion Explanation</a></p>`;
+  } else if (accuracy < 75) {
+    message += `<p>Needs more practice.</p>`;
+  } else {
+    message += `<p class="correct">Good understanding. Try next level questions.</p>`;
+  }
+
+  document.getElementById("result").innerHTML = message;
+  document.getElementById("result").style.display = "block";
+}
+</script>
+
+</body>
+</html>
