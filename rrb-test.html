@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RRB Mock Tests | Info Mates</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f2f5f9;
+  margin:0;
+}
+header{
+  background:#0b3c5d;
+  color:white;
+  padding:20px;
+  text-align:center;
+}
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
+}
+select,button{
+  padding:10px;
+  font-size:15px;
+  margin:5px 0;
+}
+.question{
+  background:white;
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:6px;
+}
+.result{
+  background:#eef3f7;
+  padding:20px;
+  margin-top:20px;
+  border-radius:6px;
+}
+.correct{color:green;}
+.wrong{color:red;}
+footer{
+  background:#0b3c5d;
+  color:white;
+  text-align:center;
+  padding:15px;
+  margin-top:40px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>RRB Practice & Mock Tests</h1>
+  <p>Timed • Negative Marking • Performance Analysis</p>
+</header>
+
+<div class="container">
+
+<h3>Select Test</h3>
+<select id="testSelect">
+  <option value="maths1">Maths – Test 1</option>
+  <option value="reasoning1">Reasoning – Test 1</option>
+  <option value="gk1">GK/Science – Test 1</option>
+  <option value="mock1">RRB Full Mock – Test 1</option>
+</select>
+
+<button onclick="startTest()">Start Test</button>
+
+<div id="timer"></div>
+<div id="testArea"></div>
+
+<button onclick="submitTest()">Submit Test</button>
+
+<div id="result" class="result" style="display:none;"></div>
+
+</div>
+
+<footer>
+  <p>YouTube: <b>info_mates</b></p>
+  <p>Email: sk88875</p>
+  <p>Telegram: infomate</p>
+</footer>
+
+<script>
+let currentTest=[],time=1800,interval;
+
+const tests={
+maths1:[
+{q:"20% of 150?",o:["20","25","30","35"],a:2,s:"Maths"},
+{q:"LCM of 6 and 8?",o:["12","24","48","8"],a:1,s:"Maths"}
+],
+reasoning1:[
+{q:"Find odd one out: Cat, Dog, Tiger, Car",o:["Cat","Dog","Tiger","Car"],a:3,s:"Reasoning"},
+{q:"Series: 2,4,8,16, ?",o:["18","24","32","64"],a:2,s:"Reasoning"}
+],
+gk1:[
+{q:"SI unit of force?",o:["Joule","Newton","Pascal","Watt"],a:1,s:"GK"},
+{q:"Human blood group discovered by?",o:["Newton","Landsteiner","Darwin","Curie"],a:1,s:"GK"}
+],
+mock1:[
+{q:"5×12?",o:["60","50","70","65"],a:0,s:"Maths"},
+{q:"Opposite of Honest?",o:["Lie","Truth","Kind","Clear"],a:0,s:"Reasoning"},
+{q:"Chemical symbol of Iron?",o:["Ir","Fe","In","Ag"],a:1,s:"GK"}
+]
+};
+
+function startTest(){
+  document.getElementById("result").style.display="none";
+  currentTest=tests[document.getElementById("testSelect").value];
+  time=1800;
+  loadQuestions();
+  interval=setInterval(timer,1000);
+}
+
+function timer(){
+  time--;
+  document.getElementById("timer").innerHTML="Time left: "+Math.floor(time/60)+":"+time%60;
+  if(time<=0) submitTest();
+}
+
+function loadQuestions(){
+  let html="";
+  currentTest.forEach((q,i)=>{
+    html+=`<div class="question"><p>${i+1}. ${q.q}</p>`;
+    q.o.forEach((op,j)=>{
+      html+=`<label><input type="radio" name="q${i}" value="${j}"> ${op}</label><br>`;
+    });
+    html+="</div>";
+  });
+  document.getElementById("testArea").innerHTML=html;
+}
+
+function submitTest(){
+  clearInterval(interval);
+  let score=0,attempt=0,subjectScore={};
+  currentTest.forEach((q,i)=>{
+    let sel=document.querySelector(`input[name="q${i}"]:checked`);
+    if(sel){
+      attempt++;
+      if(parseInt(sel.value)===q.a){
+        score++;
+        subjectScore[q.s]=(subjectScore[q.s]||0)+1;
+      } else {
+        score-=0.33;
+      }
+    }
+  });
+  let acc=((score/currentTest.length)*100).toFixed(1);
+  document.getElementById("result").innerHTML=
+  `<h3>Result</h3>
+   Score: ${score.toFixed(2)}<br>
+   Accuracy: ${acc}%<br>
+   <p>Revise weak subjects from Learn page.</p>`;
+  document.getElementById("result").style.display="block";
+}
+</script>
+
+</body>
+</html>
