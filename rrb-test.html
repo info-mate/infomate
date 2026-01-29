@@ -10,24 +10,30 @@ body{
   margin:0;
   font-family: Arial, sans-serif;
   background:#f2f5f9;
-  color:#333;
 }
 
-/* Header */
+/* Top bar */
 header{
   background:#0b3c5d;
   color:white;
-  padding:16px;
-  text-align:center;
-  font-size:20px;
-  font-weight:bold;
+  padding:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+header button{
+  background:none;
+  border:none;
+  color:white;
+  font-size:14px;
+  cursor:pointer;
 }
 
-/* Container */
+/* Layout */
 .container{
   max-width:900px;
   margin:auto;
-  padding:20px;
+  padding:15px;
 }
 
 /* Timer */
@@ -38,17 +44,12 @@ header{
   margin-bottom:10px;
 }
 
-/* Question Card */
-.question-card{
+/* Question */
+.card{
   background:white;
-  padding:20px;
+  padding:18px;
   border-radius:10px;
   box-shadow:0 4px 12px rgba(0,0,0,0.12);
-}
-
-.question-card p{
-  font-size:16px;
-  font-weight:bold;
 }
 
 .option{
@@ -56,219 +57,191 @@ header{
 }
 
 /* Navigation */
-.nav-buttons{
+.nav{
   display:flex;
   justify-content:space-between;
   margin-top:20px;
 }
 
-button{
-  padding:10px 18px;
-  font-size:14px;
+/* Submit bar */
+.submit-bar{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  padding:12px;
+  box-shadow:0 -2px 8px rgba(0,0,0,0.2);
+  text-align:center;
+}
+.submit-bar button{
+  background:#c62828;
+  color:white;
   border:none;
+  padding:12px 28px;
+  font-size:16px;
   border-radius:6px;
   cursor:pointer;
-  background:#0b3c5d;
-  color:white;
-}
-
-button:disabled{
-  background:#aaa;
 }
 
 /* Result */
 .result{
+  display:none;
   background:#eef3f7;
   padding:20px;
   border-radius:10px;
-  margin-bottom:20px;
-  display:none;
-}
-
-.result h3{
-  margin-top:0;
-  color:#0b3c5d;
-}
-
-/* Footer */
-footer{
-  background:#0b3c5d;
-  color:white;
-  text-align:center;
-  padding:14px;
-  margin-top:40px;
-  font-size:14px;
+  margin-bottom:15px;
 }
 </style>
 </head>
 
 <body>
 
-<header>Practice Test</header>
+<header>
+  <button onclick="goBack()">⬅ Back</button>
+  <div>Practice Test</div>
+  <button onclick="goNext()">Next ➡</button>
+</header>
 
 <div class="container">
 
-  <!-- RESULT SECTION (AUTO FOCUS) -->
   <div id="result" class="result"></div>
 
-  <div class="timer" id="timer">Time: 30:00</div>
+  <div class="timer" id="timer">Time: 20:00</div>
 
   <div id="testArea"></div>
 
 </div>
 
-<footer>
-  YouTube: <b>info_mates</b> | Telegram: <b>infomate</b> | Email: sk88875
-</footer>
+<div class="submit-bar">
+  <button onclick="submitTest()">Submit Test</button>
+</div>
 
 <script>
-/* ---------------- TEST DATA ---------------- */
+/* ---------------- NAVIGATION ---------------- */
+function goBack(){ history.back(); }
+function goNext(){ alert("Next page flow handled by exam selection"); }
 
-const test = [
-  {
-    q: "20% of 150 is:",
-    o: ["20","25","30","35"],
-    a: 2,
-    subject: "Maths"
-  },
-  {
-    q: "Which one is odd?",
-    o: ["Dog","Cat","Tiger","Car"],
-    a: 3,
-    subject: "Reasoning"
-  },
-  {
-    q: "SI unit of Force is:",
-    o: ["Joule","Newton","Pascal","Watt"],
-    a: 1,
-    subject: "GK"
-  }
+/* ---------------- QUESTION BANK ---------------- */
+
+/* 20 Maths */
+const maths = Array.from({length:20},(_,i)=>({
+  q:`Maths Question ${i+1}: What is ${i+1} + ${i+2}?`,
+  o:[`${i+2}`,`${i+3}`,`${i+4}`,`${i+5}`],
+  a:1,
+  subject:"Maths"
+}));
+
+/* 20 Reasoning */
+const reasoning = Array.from({length:20},(_,i)=>({
+  q:`Reasoning Question ${i+1}: Find the odd one out`,
+  o:["Dog","Cat","Car","Tiger"],
+  a:2,
+  subject:"Reasoning"
+}));
+
+/* 20 GK */
+const gk = Array.from({length:20},(_,i)=>({
+  q:`GK Question ${i+1}: SI unit of force is?`,
+  o:["Joule","Newton","Pascal","Watt"],
+  a:1,
+  subject:"GK"
+}));
+
+/* Full Mock = 100 questions (40 Maths + 30 Reasoning + 30 GK) */
+const fullMock = [
+  ...maths,...maths,
+  ...reasoning,...reasoning.slice(0,10),
+  ...gk,...gk.slice(0,10)
 ];
 
-/* ---------------- VARIABLES ---------------- */
+/* ---------------- SELECT TEST ---------------- */
+const params = new URLSearchParams(location.search);
+const type = params.get("type") || "maths";
 
+let test =
+  type==="maths" ? maths :
+  type==="reasoning" ? reasoning :
+  type==="gk" ? gk :
+  fullMock;
+
+/* ---------------- VARIABLES ---------------- */
 let index = 0;
 let answers = [];
-let time = 1800;
+let time = test.length===100 ? 3600 : 1200; // 100Q=60min, others=20min
 let timerInterval;
 
-/* ---------------- START TEST ---------------- */
+/* ---------------- START ---------------- */
+start();
 
-startTest();
-
-function startTest(){
-  index = 0;
-  answers = [];
-  time = 1800;
+function start(){
   showQuestion();
-  timerInterval = setInterval(updateTimer, 1000);
+  timerInterval = setInterval(updateTimer,1000);
 }
 
 /* ---------------- TIMER ---------------- */
-
 function updateTimer(){
   time--;
-  let m = Math.floor(time/60);
-  let s = time % 60;
-  document.getElementById("timer").innerText =
-    `Time: ${m}:${s<10?"0"+s:s}`;
-
-  if(time <= 0){
-    submitTest();
-  }
+  let m=Math.floor(time/60), s=time%60;
+  timer.innerText=`Time: ${m}:${s<10?"0"+s:s}`;
+  if(time<=0) submitTest();
 }
 
-/* ---------------- QUESTION DISPLAY ---------------- */
-
+/* ---------------- QUESTION ---------------- */
 function showQuestion(){
-  const q = test[index];
+  const q=test[index];
+  let html=`<div class="card">
+    <p><b>Question ${index+1} of ${test.length}</b></p>
+    <p>${q.q}</p>`;
 
-  let html = `
-    <div class="question-card">
-      <p>Question ${index+1} of ${test.length}</p>
-      <p>${q.q}</p>
-  `;
-
-  q.o.forEach((opt,i)=>{
-    const checked = answers[index] === i ? "checked" : "";
-    html += `
+  q.o.forEach((op,i)=>{
+    const chk = answers[index]===i?"checked":"";
+    html+=`
       <div class="option">
         <label>
-          <input type="radio" name="opt" ${checked}
-          onclick="saveAnswer(${i})"> ${opt}
+          <input type="radio" ${chk}
+            onclick="answers[${index}]=${i}">
+          ${op}
         </label>
-      </div>
-    `;
+      </div>`;
   });
 
-  html += `
-    <div class="nav-buttons">
+  html+=`
+    <div class="nav">
       <button onclick="prevQ()" ${index===0?"disabled":""}>⬅ Back</button>
-      ${
-        index === test.length-1
-        ? `<button onclick="submitTest()">Submit</button>`
-        : `<button onclick="nextQ()">Next ➡</button>`
-      }
+      <button onclick="nextQ()" ${index===test.length-1?"disabled":""}>Next ➡</button>
     </div>
-    </div>
-  `;
+  </div>`;
 
-  document.getElementById("testArea").innerHTML = html;
+  testArea.innerHTML=html;
 }
 
-/* ---------------- NAVIGATION ---------------- */
+function nextQ(){ index++; showQuestion(); }
+function prevQ(){ index--; showQuestion(); }
 
-function saveAnswer(val){
-  answers[index] = val;
-}
-
-function nextQ(){
-  index++;
-  showQuestion();
-}
-
-function prevQ(){
-  index--;
-  showQuestion();
-}
-
-/* ---------------- SUBMIT & RESULT ---------------- */
-
+/* ---------------- SUBMIT ---------------- */
 function submitTest(){
   clearInterval(timerInterval);
-
-  let score = 0;
-  let attempt = 0;
+  let score=0,attempt=0;
 
   test.forEach((q,i)=>{
-    if(answers[i] !== undefined){
+    if(answers[i]!==undefined){
       attempt++;
-      if(answers[i] === q.a){
-        score += 1;
-      } else {
-        score -= 0.33;
-      }
+      if(answers[i]===q.a) score++;
+      else score-=0.33;
     }
   });
 
-  let accuracy = ((score/test.length)*100).toFixed(1);
-
-  let resultHTML = `
+  result.innerHTML=`
     <h3>Test Result</h3>
     <p><b>Score:</b> ${score.toFixed(2)}</p>
-    <p><b>Attempted:</b> ${attempt} / ${test.length}</p>
-    <p><b>Accuracy:</b> ${accuracy}%</p>
-    <p>Revise weak subjects from the Learn section.</p>
+    <p><b>Attempted:</b> ${attempt}/${test.length}</p>
+    <p><b>Accuracy:</b> ${((score/test.length)*100).toFixed(1)}%</p>
+    <p>Revise weak subjects from Learn section.</p>
   `;
-
-  const resBox = document.getElementById("result");
-  resBox.innerHTML = resultHTML;
-  resBox.style.display = "block";
-
-  /* 🔴 AUTO SCROLL TO RESULT (YOUR MAIN REQUEST) */
-  resBox.scrollIntoView({ behavior: "smooth" });
-
-  document.getElementById("testArea").innerHTML = "";
+  result.style.display="block";
+  result.scrollIntoView({behavior:"smooth"});
+  testArea.innerHTML="";
 }
 </script>
 
