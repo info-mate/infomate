@@ -1,247 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Practice Test | Info Mates</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Info Mates | Practice Tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-  margin:0;
-  font-family: Arial, sans-serif;
-  background:#f2f5f9;
-}
+  <!-- App / PWA feel -->
+  <meta name="theme-color" content="#0b3c5d">
+  <link rel="icon" href="logo.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
 
-/* Top bar */
-header{
-  background:#0b3c5d;
-  color:white;
-  padding:14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-header button{
-  background:none;
-  border:none;
-  color:white;
-  font-size:14px;
-  cursor:pointer;
-}
+  <style>
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background:#f4f6f9;
+      color:#333;
+    }
 
-/* Layout */
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:15px;
-}
+    /* Top App Bar */
+    header{
+      background:#0b3c5d;
+      color:white;
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.2);
+    }
 
-/* Timer */
-.timer{
-  text-align:right;
-  font-weight:bold;
-  color:#0b3c5d;
-  margin-bottom:10px;
-}
+    header img{
+      height:40px;
+    }
 
-/* Question */
-.card{
-  background:white;
-  padding:18px;
-  border-radius:10px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.12);
-}
+    header h1{
+      margin:0;
+      font-size:20px;
+      font-weight:600;
+    }
 
-.option{
-  margin:10px 0;
-}
+    /* Hero Section */
+    .hero{
+      padding:30px 20px;
+      text-align:center;
+    }
 
-/* Navigation */
-.nav{
-  display:flex;
-  justify-content:space-between;
-  margin-top:20px;
-}
+    .hero h2{
+      margin:0;
+      font-size:22px;
+      color:#0b3c5d;
+    }
 
-/* Submit bar */
-.submit-bar{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#fff;
-  padding:12px;
-  box-shadow:0 -2px 8px rgba(0,0,0,0.2);
-  text-align:center;
-}
-.submit-bar button{
-  background:#c62828;
-  color:white;
-  border:none;
-  padding:12px 28px;
-  font-size:16px;
-  border-radius:6px;
-  cursor:pointer;
-}
+    .hero p{
+      margin-top:10px;
+      font-size:15px;
+      color:#555;
+      max-width:600px;
+      margin-left:auto;
+      margin-right:auto;
+    }
 
-/* Result */
-.result{
-  display:none;
-  background:#eef3f7;
-  padding:20px;
-  border-radius:10px;
-  margin-bottom:15px;
-}
-</style>
+    /* Exam Selection */
+    .container{
+      padding:20px;
+      max-width:1000px;
+      margin:auto;
+    }
+
+    .section-title{
+      font-size:18px;
+      color:#0b3c5d;
+      margin-bottom:15px;
+      font-weight:bold;
+    }
+
+    .exam-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+      gap:16px;
+    }
+
+    .exam-card{
+      background:white;
+      border-radius:14px;
+      padding:20px 10px;
+      text-align:center;
+      box-shadow:0 4px 12px rgba(0,0,0,0.12);
+      cursor:pointer;
+      transition:transform 0.2s, box-shadow 0.2s;
+    }
+
+    .exam-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 8px 18px rgba(0,0,0,0.18);
+    }
+
+    .exam-card span{
+      display:block;
+      margin-top:10px;
+      font-weight:bold;
+      color:#0b3c5d;
+    }
+
+    /* Footer */
+    footer{
+      margin-top:40px;
+      background:#0b3c5d;
+      color:white;
+      text-align:center;
+      padding:16px 10px;
+      font-size:14px;
+    }
+
+    footer b{
+      font-weight:600;
+    }
+  </style>
 </head>
 
 <body>
 
+<!-- APP HEADER -->
 <header>
-  <button onclick="goBack()">⬅ Back</button>
-  <div>Practice Test</div>
-  <button onclick="goNext()">Next ➡</button>
+  <img src="logo.png" alt="Info Mates Logo">
+  <h1>Info Mates</h1>
 </header>
 
+<!-- HERO -->
+<div class="hero">
+  <h2>Practice • Analyze • Improve</h2>
+  <p>
+    Subject-wise and full mock practice tests with timer, negative marking
+    and performance analysis for competitive and entrance exams.
+  </p>
+</div>
+
+<!-- EXAM SELECTION -->
 <div class="container">
+  <div class="section-title">Select Exam</div>
 
-  <div id="result" class="result"></div>
+  <div class="exam-grid">
+    <div class="exam-card" onclick="goExam('rrb')">
+      <span>RRB</span>
+    </div>
 
-  <div class="timer" id="timer">Time: 20:00</div>
+    <div class="exam-card" onclick="goExam('ssc')">
+      <span>SSC</span>
+    </div>
 
-  <div id="testArea"></div>
+    <div class="exam-card" onclick="goExam('jee')">
+      <span>IIT-JEE</span>
+    </div>
 
+    <div class="exam-card" onclick="goExam('neet')">
+      <span>NEET</span>
+    </div>
+  </div>
 </div>
 
-<div class="submit-bar">
-  <button onclick="submitTest()">Submit Test</button>
-</div>
+<!-- FOOTER -->
+<footer>
+  <div>YouTube: <b>info_mates</b></div>
+  <div>Telegram: <b>infomate</b></div>
+  <div>Email: <b>sk88875</b></div>
+</footer>
 
 <script>
-/* ---------------- NAVIGATION ---------------- */
-function goBack(){ history.back(); }
-function goNext(){ alert("Next page flow handled by exam selection"); }
-
-/* ---------------- QUESTION BANK ---------------- */
-
-/* 20 Maths */
-const maths = Array.from({length:20},(_,i)=>({
-  q:`Maths Question ${i+1}: What is ${i+1} + ${i+2}?`,
-  o:[`${i+2}`,`${i+3}`,`${i+4}`,`${i+5}`],
-  a:1,
-  subject:"Maths"
-}));
-
-/* 20 Reasoning */
-const reasoning = Array.from({length:20},(_,i)=>({
-  q:`Reasoning Question ${i+1}: Find the odd one out`,
-  o:["Dog","Cat","Car","Tiger"],
-  a:2,
-  subject:"Reasoning"
-}));
-
-/* 20 GK */
-const gk = Array.from({length:20},(_,i)=>({
-  q:`GK Question ${i+1}: SI unit of force is?`,
-  o:["Joule","Newton","Pascal","Watt"],
-  a:1,
-  subject:"GK"
-}));
-
-/* Full Mock = 100 questions (40 Maths + 30 Reasoning + 30 GK) */
-const fullMock = [
-  ...maths,...maths,
-  ...reasoning,...reasoning.slice(0,10),
-  ...gk,...gk.slice(0,10)
-];
-
-/* ---------------- SELECT TEST ---------------- */
-const params = new URLSearchParams(location.search);
-const type = params.get("type") || "maths";
-
-let test =
-  type==="maths" ? maths :
-  type==="reasoning" ? reasoning :
-  type==="gk" ? gk :
-  fullMock;
-
-/* ---------------- VARIABLES ---------------- */
-let index = 0;
-let answers = [];
-let time = test.length===100 ? 3600 : 1200; // 100Q=60min, others=20min
-let timerInterval;
-
-/* ---------------- START ---------------- */
-start();
-
-function start(){
-  showQuestion();
-  timerInterval = setInterval(updateTimer,1000);
-}
-
-/* ---------------- TIMER ---------------- */
-function updateTimer(){
-  time--;
-  let m=Math.floor(time/60), s=time%60;
-  timer.innerText=`Time: ${m}:${s<10?"0"+s:s}`;
-  if(time<=0) submitTest();
-}
-
-/* ---------------- QUESTION ---------------- */
-function showQuestion(){
-  const q=test[index];
-  let html=`<div class="card">
-    <p><b>Question ${index+1} of ${test.length}</b></p>
-    <p>${q.q}</p>`;
-
-  q.o.forEach((op,i)=>{
-    const chk = answers[index]===i?"checked":"";
-    html+=`
-      <div class="option">
-        <label>
-          <input type="radio" ${chk}
-            onclick="answers[${index}]=${i}">
-          ${op}
-        </label>
-      </div>`;
-  });
-
-  html+=`
-    <div class="nav">
-      <button onclick="prevQ()" ${index===0?"disabled":""}>⬅ Back</button>
-      <button onclick="nextQ()" ${index===test.length-1?"disabled":""}>Next ➡</button>
-    </div>
-  </div>`;
-
-  testArea.innerHTML=html;
-}
-
-function nextQ(){ index++; showQuestion(); }
-function prevQ(){ index--; showQuestion(); }
-
-/* ---------------- SUBMIT ---------------- */
-function submitTest(){
-  clearInterval(timerInterval);
-  let score=0,attempt=0;
-
-  test.forEach((q,i)=>{
-    if(answers[i]!==undefined){
-      attempt++;
-      if(answers[i]===q.a) score++;
-      else score-=0.33;
-    }
-  });
-
-  result.innerHTML=`
-    <h3>Test Result</h3>
-    <p><b>Score:</b> ${score.toFixed(2)}</p>
-    <p><b>Attempted:</b> ${attempt}/${test.length}</p>
-    <p><b>Accuracy:</b> ${((score/test.length)*100).toFixed(1)}%</p>
-    <p>Revise weak subjects from Learn section.</p>
-  `;
-  result.style.display="block";
-  result.scrollIntoView({behavior:"smooth"});
-  testArea.innerHTML="";
+function goExam(exam){
+  window.location.href = "exam.html?type=" + exam;
 }
 </script>
 
