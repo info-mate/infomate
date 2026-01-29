@@ -19,6 +19,11 @@ header{background:#0b3c5d;color:white;padding:20px;text-align:center;}
 }
 </style>
 </head>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
 
 <body>
 
