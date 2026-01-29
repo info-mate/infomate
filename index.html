@@ -11,6 +11,12 @@
   <link rel="apple-touch-icon" href="icon-192.png">
 
   <style>
+    <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
     body{
       margin:0;
       font-family: Arial, sans-serif;
