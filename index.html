@@ -2,167 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Info Mates | Free Learning Platform</title>
+  <title>Info Mates</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0b3c5d">
 
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
       background-color: #f2f5f9;
-      color: #333;
-    }
-
-    header {
-      background-color: #0b3c5d;
-      color: white;
-      padding: 35px 20px;
-      text-align: center;
-    }
-
-    header h1 {
       margin: 0;
-      font-size: 34px;
-    }
-
-    header p {
-      margin-top: 10px;
-      font-size: 16px;
-      opacity: 0.95;
-    }
-
-    nav {
-      background-color: #092f47;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      padding: 12px 0;
-    }
-
-    nav a {
-      color: white;
-      margin: 6px 18px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    section {
-      max-width: 1000px;
-      margin: auto;
       padding: 40px 20px;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: white;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       text-align: center;
     }
 
-    .card h2 {
-      margin-top: 0;
+    h1 {
       color: #0b3c5d;
     }
 
-    .card p {
-      font-size: 14px;
-      color: #555;
+    p {
+      font-size: 16px;
+      color: #333;
+      max-width: 600px;
+      margin: 15px auto;
     }
 
-    .card a {
+    a.button {
       display: inline-block;
-      margin-top: 15px;
-      padding: 12px 22px;
+      margin-top: 25px;
+      padding: 14px 26px;
       background-color: #0b3c5d;
       color: white;
       text-decoration: none;
       border-radius: 6px;
+      font-size: 16px;
       font-weight: bold;
     }
 
-    footer {
-      background-color: #0b3c5d;
-      color: white;
-      text-align: center;
-      padding: 22px 15px;
-      margin-top: 40px;
-    }
-
-    footer p {
-      margin: 6px 0;
-      font-size: 14px;
+    a.button:hover {
+      background-color: #08314a;
     }
   </style>
 </head>
+
 <body>
 
-<header>
   <h1>Info Mates</h1>
-  <p>Free learning through videos, tests & notes</p>
-</header>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="videos-new.html">Videos</a>
-  <a href="tests.html">Free Tests</a>
-  <a href="pdfs.html">PDF Notes</a>
-  <a href="contact.html">Contact</a>
-</nav>
+  <p>
+    Practice tests, instant scoring, explanations, and guided learning
+    for school and competitive exams.
+  </p>
 
-<section>
-  <div class="card-grid">
+  <p>
+    This is a demo home page to verify GitHub Pages is working correctly.
+  </p>
 
-    <div class="card">
-      <h2>📺 Video Classes</h2>
-      <p>Subject-wise and topic-wise video lessons for easy understanding.</p>
-      <a href="videos-new.html">Watch Videos</a>
-    </div>
-
-    <div class="card">
-      <h2>📝 Free Tests</h2>
-      <p>Practice tests to check understanding and improve performance.</p>
-      <a href="tests.html">Take Tests</a>
-    </div>
-
-    <div class="card">
-      <h2>📄 PDF Notes</h2>
-      <p>Simple notes, formulas and summaries for quick revision.</p>
-      <a href="pdfs.html">Download PDFs</a>
-    </div>
-
-    <div class="card">
-      <h2>📢 Telegram Channel</h2>
-      <p>Get updates on new videos, tests and study materials.</p>
-      <a href="https://t.me/YourChannelName" target="_blank">Join Telegram</a>
-    </div>
-
-  </div>
-</section>
-
-<footer>
-  <p><strong>Info Mates</strong></p>
-  <p>Free learning for school & foundation exams</p>
-  <p>📬 matesints@gmail.com</p>
-  <p>© <span id="year"></span> Info Mates. All rights reserved.</p>
-</footer>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+  <a class="button" href="test-demo.html">
+    ▶ Open Demo Practice Test
+  </a>
 
 </body>
 </html>
