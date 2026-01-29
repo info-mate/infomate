@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Select Subject</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{font-family:Arial;background:#f2f5f9;margin:0;}
+header{background:#0b3c5d;color:white;padding:20px;text-align:center;}
+.container{padding:20px;}
+.subject{
+  background:white;
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:10px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.1);
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>Select Subject</h2>
+</header>
+
+<div class="container" id="subjects"></div>
+
+<script>
+const subjects={
+  rrb:["Maths","Reasoning","GK / Science"],
+  ssc:["Maths","Reasoning","English","GK"],
+  jee:["Physics","Chemistry","Maths"],
+  neet:["Physics","Chemistry","Biology"]
+};
+
+const exam=new URLSearchParams(location.search).get("type");
+const box=document.getElementById("subjects");
+
+subjects[exam].forEach(s=>{
+  box.innerHTML+=`
+    <div class="subject" onclick="start('${s}')">
+      ${s}
+    </div>`;
+});
+
+function start(sub){
+  window.location.href="rrb-test.html";
+}
+</script>
+
+</body>
+</html>
