@@ -2,160 +2,273 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RRB Mock Tests | Info Mates</title>
+<title>Practice Test | Info Mates</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
+  margin:0;
   font-family: Arial, sans-serif;
   background:#f2f5f9;
-  margin:0;
+  color:#333;
 }
+
+/* Header */
 header{
   background:#0b3c5d;
   color:white;
-  padding:20px;
+  padding:16px;
   text-align:center;
+  font-size:20px;
+  font-weight:bold;
 }
+
+/* Container */
 .container{
-  max-width:1000px;
+  max-width:900px;
   margin:auto;
   padding:20px;
 }
-select,button{
-  padding:10px;
-  font-size:15px;
-  margin:5px 0;
+
+/* Timer */
+.timer{
+  text-align:right;
+  font-weight:bold;
+  color:#0b3c5d;
+  margin-bottom:10px;
 }
-.question{
+
+/* Question Card */
+.question-card{
   background:white;
-  padding:15px;
-  margin-bottom:15px;
-  border-radius:6px;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.12);
 }
+
+.question-card p{
+  font-size:16px;
+  font-weight:bold;
+}
+
+.option{
+  margin:10px 0;
+}
+
+/* Navigation */
+.nav-buttons{
+  display:flex;
+  justify-content:space-between;
+  margin-top:20px;
+}
+
+button{
+  padding:10px 18px;
+  font-size:14px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  background:#0b3c5d;
+  color:white;
+}
+
+button:disabled{
+  background:#aaa;
+}
+
+/* Result */
 .result{
   background:#eef3f7;
   padding:20px;
-  margin-top:20px;
-  border-radius:6px;
+  border-radius:10px;
+  margin-bottom:20px;
+  display:none;
 }
-.correct{color:green;}
-.wrong{color:red;}
+
+.result h3{
+  margin-top:0;
+  color:#0b3c5d;
+}
+
+/* Footer */
 footer{
   background:#0b3c5d;
   color:white;
   text-align:center;
-  padding:15px;
+  padding:14px;
   margin-top:40px;
+  font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Practice Tests</h1>
-  <p>Timed • Negative Marking • Performance Analysis</p>
-</header>
+<header>Practice Test</header>
 
 <div class="container">
 
-<h3>Select Test</h3>
-<select id="testSelect">
-  <option value="maths1">Maths – Test 1</option>
-  <option value="reasoning1">Reasoning – Test 1</option>
-  <option value="gk1">GK/Science – Test 1</option>
-  <option value="mock1">RRB Full Mock – Test 1</option>
-</select>
+  <!-- RESULT SECTION (AUTO FOCUS) -->
+  <div id="result" class="result"></div>
 
-<button onclick="startTest()">Start Test</button>
+  <div class="timer" id="timer">Time: 30:00</div>
 
-<div id="timer"></div>
-<div id="testArea"></div>
-
-<button onclick="submitTest()">Submit Test</button>
-
-<div id="result" class="result" style="display:none;"></div>
+  <div id="testArea"></div>
 
 </div>
 
 <footer>
-  <p>YouTube: <b>info_mates</b></p>
-  <p>Email: sk88875</p>
-  <p>Telegram: infomate</p>
+  YouTube: <b>info_mates</b> | Telegram: <b>infomate</b> | Email: sk88875
 </footer>
 
 <script>
-let currentTest=[],time=1800,interval;
+/* ---------------- TEST DATA ---------------- */
 
-const tests={
-maths1:[
-{q:"20% of 150?",o:["20","25","30","35"],a:2,s:"Maths"},
-{q:"LCM of 6 and 8?",o:["12","24","48","8"],a:1,s:"Maths"}
-],
-reasoning1:[
-{q:"Find odd one out: Cat, Dog, Tiger, Car",o:["Cat","Dog","Tiger","Car"],a:3,s:"Reasoning"},
-{q:"Series: 2,4,8,16, ?",o:["18","24","32","64"],a:2,s:"Reasoning"}
-],
-gk1:[
-{q:"SI unit of force?",o:["Joule","Newton","Pascal","Watt"],a:1,s:"GK"},
-{q:"Human blood group discovered by?",o:["Newton","Landsteiner","Darwin","Curie"],a:1,s:"GK"}
-],
-mock1:[
-{q:"5×12?",o:["60","50","70","65"],a:0,s:"Maths"},
-{q:"Opposite of Honest?",o:["Lie","Truth","Kind","Clear"],a:0,s:"Reasoning"},
-{q:"Chemical symbol of Iron?",o:["Ir","Fe","In","Ag"],a:1,s:"GK"}
-]
-};
+const test = [
+  {
+    q: "20% of 150 is:",
+    o: ["20","25","30","35"],
+    a: 2,
+    subject: "Maths"
+  },
+  {
+    q: "Which one is odd?",
+    o: ["Dog","Cat","Tiger","Car"],
+    a: 3,
+    subject: "Reasoning"
+  },
+  {
+    q: "SI unit of Force is:",
+    o: ["Joule","Newton","Pascal","Watt"],
+    a: 1,
+    subject: "GK"
+  }
+];
+
+/* ---------------- VARIABLES ---------------- */
+
+let index = 0;
+let answers = [];
+let time = 1800;
+let timerInterval;
+
+/* ---------------- START TEST ---------------- */
+
+startTest();
 
 function startTest(){
-  document.getElementById("result").style.display="none";
-  currentTest=tests[document.getElementById("testSelect").value];
-  time=1800;
-  loadQuestions();
-  interval=setInterval(timer,1000);
+  index = 0;
+  answers = [];
+  time = 1800;
+  showQuestion();
+  timerInterval = setInterval(updateTimer, 1000);
 }
 
-function timer(){
+/* ---------------- TIMER ---------------- */
+
+function updateTimer(){
   time--;
-  document.getElementById("timer").innerHTML="Time left: "+Math.floor(time/60)+":"+time%60;
-  if(time<=0) submitTest();
+  let m = Math.floor(time/60);
+  let s = time % 60;
+  document.getElementById("timer").innerText =
+    `Time: ${m}:${s<10?"0"+s:s}`;
+
+  if(time <= 0){
+    submitTest();
+  }
 }
 
-function loadQuestions(){
-  let html="";
-  currentTest.forEach((q,i)=>{
-    html+=`<div class="question"><p>${i+1}. ${q.q}</p>`;
-    q.o.forEach((op,j)=>{
-      html+=`<label><input type="radio" name="q${i}" value="${j}"> ${op}</label><br>`;
-    });
-    html+="</div>";
+/* ---------------- QUESTION DISPLAY ---------------- */
+
+function showQuestion(){
+  const q = test[index];
+
+  let html = `
+    <div class="question-card">
+      <p>Question ${index+1} of ${test.length}</p>
+      <p>${q.q}</p>
+  `;
+
+  q.o.forEach((opt,i)=>{
+    const checked = answers[index] === i ? "checked" : "";
+    html += `
+      <div class="option">
+        <label>
+          <input type="radio" name="opt" ${checked}
+          onclick="saveAnswer(${i})"> ${opt}
+        </label>
+      </div>
+    `;
   });
-  document.getElementById("testArea").innerHTML=html;
+
+  html += `
+    <div class="nav-buttons">
+      <button onclick="prevQ()" ${index===0?"disabled":""}>⬅ Back</button>
+      ${
+        index === test.length-1
+        ? `<button onclick="submitTest()">Submit</button>`
+        : `<button onclick="nextQ()">Next ➡</button>`
+      }
+    </div>
+    </div>
+  `;
+
+  document.getElementById("testArea").innerHTML = html;
 }
+
+/* ---------------- NAVIGATION ---------------- */
+
+function saveAnswer(val){
+  answers[index] = val;
+}
+
+function nextQ(){
+  index++;
+  showQuestion();
+}
+
+function prevQ(){
+  index--;
+  showQuestion();
+}
+
+/* ---------------- SUBMIT & RESULT ---------------- */
 
 function submitTest(){
-  clearInterval(interval);
-  let score=0,attempt=0,subjectScore={};
-  currentTest.forEach((q,i)=>{
-    let sel=document.querySelector(`input[name="q${i}"]:checked`);
-    if(sel){
+  clearInterval(timerInterval);
+
+  let score = 0;
+  let attempt = 0;
+
+  test.forEach((q,i)=>{
+    if(answers[i] !== undefined){
       attempt++;
-      if(parseInt(sel.value)===q.a){
-        score++;
-        subjectScore[q.s]=(subjectScore[q.s]||0)+1;
+      if(answers[i] === q.a){
+        score += 1;
       } else {
-        score-=0.33;
+        score -= 0.33;
       }
     }
   });
-  let acc=((score/currentTest.length)*100).toFixed(1);
-  document.getElementById("result").innerHTML=
-  `<h3>Result</h3>
-   Score: ${score.toFixed(2)}<br>
-   Accuracy: ${acc}%<br>
-   <p>Revise weak subjects from Learn page.</p>`;
-  document.getElementById("result").style.display="block";
+
+  let accuracy = ((score/test.length)*100).toFixed(1);
+
+  let resultHTML = `
+    <h3>Test Result</h3>
+    <p><b>Score:</b> ${score.toFixed(2)}</p>
+    <p><b>Attempted:</b> ${attempt} / ${test.length}</p>
+    <p><b>Accuracy:</b> ${accuracy}%</p>
+    <p>Revise weak subjects from the Learn section.</p>
+  `;
+
+  const resBox = document.getElementById("result");
+  resBox.innerHTML = resultHTML;
+  resBox.style.display = "block";
+
+  /* 🔴 AUTO SCROLL TO RESULT (YOUR MAIN REQUEST) */
+  resBox.scrollIntoView({ behavior: "smooth" });
+
+  document.getElementById("testArea").innerHTML = "";
 }
 </script>
 
